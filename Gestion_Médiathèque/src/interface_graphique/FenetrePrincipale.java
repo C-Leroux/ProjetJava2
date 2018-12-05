@@ -2,6 +2,8 @@ package interface_graphique;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -10,7 +12,15 @@ import javax.swing.JPanel;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class FenetrePrincipale extends JFrame{
+public class FenetrePrincipale extends JFrame implements ActionListener {
+	
+	private JMenuItem nouveauA;
+	private JMenuItem consulterA;
+	private JMenuItem supprimerA;
+	
+	private JMenuItem nouveauO;
+	private JMenuItem consulterO;
+	private JMenuItem supprimerO;
 	
 	public FenetrePrincipale()
 	{
@@ -43,25 +53,53 @@ public class FenetrePrincipale extends JFrame{
 		JMenu adherents = new JMenu("Adhérents");
 		JMenu oeuvres = new JMenu("Oeuvres");
 		
-		JMenuItem nouveauA = new JMenuItem("Nouveau");
-		JMenuItem consulterA = new JMenuItem("Consulter");
-		JMenuItem supprimerA = new JMenuItem("Supprimer");
+		nouveauA = new JMenuItem("Nouveau");
+		consulterA = new JMenuItem("Consulter");
+		supprimerA = new JMenuItem("Supprimer");
 		
-		JMenuItem nouveauB = new JMenuItem("Nouveau");
-		JMenuItem consulterB = new JMenuItem("Consulter");
-		JMenuItem supprimerB = new JMenuItem("Supprimer");
+		nouveauO = new JMenuItem("Nouveau");
+		consulterO = new JMenuItem("Consulter");
+		supprimerO = new JMenuItem("Supprimer");
+		
+		nouveauA.addActionListener(this);
+		consulterA.addActionListener(this);
+		supprimerA.addActionListener(this);
+		
+		nouveauO.addActionListener(this);
+		consulterO.addActionListener(this);
+		supprimerO.addActionListener(this);
 		
 		adherents.add(nouveauA);
 		adherents.add(consulterA);
 		adherents.add(supprimerA);
 		
-		oeuvres.add(nouveauB);
-		oeuvres.add(consulterB);
-		oeuvres.add(supprimerB);
+		oeuvres.add(nouveauO);
+		oeuvres.add(consulterO);
+		oeuvres.add(supprimerO);
 		
 		menu.add(oeuvres);
 		menu.add(adherents);
 		
 		return menu;
+	}
+	
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getSource();
+		
+		if (source == nouveauA) {
+			NouvelAdherent dialog = new NouvelAdherent();
+			dialog.setVisible(true);
+		}
+		if (source == consulterA)
+		{}
+		if (source == supprimerA)
+		{}
+		if (source == nouveauO)
+		{}
+		if (source == consulterO)
+		{}
+		if (source == supprimerO)
+		{}
 	}
 }
