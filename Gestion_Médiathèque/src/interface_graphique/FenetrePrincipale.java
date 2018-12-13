@@ -91,8 +91,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			NouvelAdherent dialog = new NouvelAdherent();
 			dialog.setVisible(true);
 		}
-		if (source == consulterA)
-		{}
+		if (source == consulterA) {
+			ConsulterAdherent dialog = new ConsulterAdherent();
+			dialog.setVisible(true);
+		}
 		if (source == supprimerA)
 		{}
 		if (source == nouveauO)

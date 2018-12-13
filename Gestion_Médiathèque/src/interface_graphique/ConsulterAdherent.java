@@ -6,14 +6,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class NouvelAdherent extends JDialog {
+public class ConsulterAdherent extends JDialog {
 	
-	public NouvelAdherent()
+	public ConsulterAdherent()
 	{
 		super();
 		build();
@@ -21,7 +23,7 @@ public class NouvelAdherent extends JDialog {
 	
 	private void build()
 	{
-		setTitle("Nouvel adhérent");
+		setTitle("Consulter les adhérents");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -36,14 +38,13 @@ public class NouvelAdherent extends JDialog {
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(Color.white);
 		
-		JLabel nom = new JLabel("Nom", JLabel.LEFT);
-		JLabel prenom = new JLabel("Prénom", JLabel.LEFT);
-		JLabel adresse = new JLabel("Adresse", JLabel.LEFT);
+		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
+		JLabel coord = new JLabel("Afficher les coordonnées de l'adhérent", JLabel.LEFT);
+		JLabel prets = new JLabel("Afficher les prêts en cours", JLabel.LEFT);
 		
-		int text_size = 10;
-		JTextField textNom = new JTextField(text_size);
-		JTextField textPrenom = new JTextField(text_size);
-		JTextField textAdresse = new JTextField(text_size);
+		JComboBox listeAdh = new JComboBox();
+		JCheckBox coordCheck = new JCheckBox();
+		JCheckBox pretsCheck = new JCheckBox();
 		
 		JButton valider = new JButton("Valider");
 		JButton annuler = new JButton("Annuler");
@@ -51,23 +52,23 @@ public class NouvelAdherent extends JDialog {
 		GridBagConstraints gbc;
 		
 		gbc = buildConstraints(0, 0);
-		panel.add(nom, gbc);
+		panel.add(liste, gbc);
 		
 		gbc = buildConstraints(0, 1);
-		panel.add(prenom, gbc);
+		panel.add(coordCheck, gbc);
 		
 		gbc = buildConstraints(0, 2);
-		panel.add(adresse, gbc);
+		panel.add(pretsCheck, gbc);
 		
 		gbc = buildConstraints(1, 0);
-		panel.add(textNom, gbc);
+		panel.add(listeAdh, gbc);
 		
 		gbc = buildConstraints(1, 1);
-		panel.add(textPrenom, gbc);
+		panel.add(coord, gbc);
 		
 		gbc = buildConstraints(1, 2);
 		gbc.gridwidth = 2;
-		panel.add(textAdresse, gbc);
+		panel.add(prets, gbc);
 		
 		gbc = buildConstraints(1, 3);
 		panel.add(valider, gbc);
@@ -83,13 +84,9 @@ public class NouvelAdherent extends JDialog {
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(5, 0, 5, 5);
-		if (y != 3)
-		{
+
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.anchor = GridBagConstraints.WEST;
-		}
-		else
-			gbc.anchor = GridBagConstraints.EAST;
 		
 		gbc.gridx = x;
 		gbc.gridy = y;
