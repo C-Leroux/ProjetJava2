@@ -9,6 +9,9 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
+
+import mediatheque.Adherents;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
@@ -22,9 +25,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JMenuItem consulterO;
 	private JMenuItem supprimerO;
 	
-	public FenetrePrincipale()
+	private Adherents adherents;
+	
+	public FenetrePrincipale(Adherents adherents)
 	{
 		super();
+		this.adherents = adherents;
 		build();
 	}
 	
@@ -88,15 +94,15 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		Object source = e.getSource();
 		
 		if (source == nouveauA) {
-			NouvelAdherent dialog = new NouvelAdherent();
+			NouvelAdherent dialog = new NouvelAdherent(adherents);
 			dialog.setVisible(true);
 		}
 		if (source == consulterA) {
-			ConsulterAdherent dialog = new ConsulterAdherent();
+			ConsulterAdherent dialog = new ConsulterAdherent(adherents);
 			dialog.setVisible(true);
 		}
 		if (source == supprimerA) {
-			SupprimerAdherent dialog = new SupprimerAdherent();
+			SupprimerAdherent dialog = new SupprimerAdherent(adherents);
 			dialog.setVisible(true);
 		}
 		if (source == nouveauO) {

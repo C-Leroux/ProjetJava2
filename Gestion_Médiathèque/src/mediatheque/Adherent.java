@@ -18,6 +18,11 @@ public class Adherent {
     this.prenom = prenom;
     this.adresse = adresse;
   }
+  
+  public String getNomPrenom()
+  {
+	  return nom + " " + prenom;
+  }
 
   public Exemplaire emprunter(Oeuvre oeuvre) {
     Exemplaire exemplaire = oeuvre.emprunter();

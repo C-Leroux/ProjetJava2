@@ -7,10 +7,11 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import java.util.LinkedHashMap;
+import java.util.Vector;
 import java.util.HashMap;
 public class Adherents implements Runnable {
 
-private ArrayList<Adherent> adherents = new ArrayList<Adherent>();
+private Vector<Adherent> adherents = new Vector<Adherent>();
 
 public Adherents() {
 	  
@@ -34,6 +35,10 @@ public String toJson()
 
 public Adherent getAdherent(String nom, String prenom, String adresse) {
 	  return null;
+}
+
+public Vector<Adherent> getAdherents() {
+	return adherents;
 }
 
 public void addAdherent(Adherent adherent) {

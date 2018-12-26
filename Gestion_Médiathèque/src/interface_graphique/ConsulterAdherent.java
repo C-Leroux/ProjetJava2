@@ -1,23 +1,32 @@
 package interface_graphique;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import mediatheque.Adherent;
+import mediatheque.Adherents;
+
 public class ConsulterAdherent extends JDialog {
 	
-	public ConsulterAdherent()
+	private Adherents adherents;
+	
+	public ConsulterAdherent(Adherents adherents)
 	{
 		super();
+		this.adherents = adherents;
 		build();
 	}
 	
@@ -40,7 +49,21 @@ public class ConsulterAdherent extends JDialog {
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
 		
-		JComboBox listeAdh = new JComboBox();
+		// On cree la Combo Box contenant la liste des adherents, puis on lui donne un renderer qui va permettre
+		// d'afficher le nom complet des adherents de la liste
+		JComboBox<Adherent> listeAdh = new JComboBox<Adherent>(adherents.getAdherents());
+		listeAdh.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Adherent){
+                    Adherent adherent = (Adherent) value;
+                    setText(adherent.getNomPrenom());
+                }
+                return this;
+            }
+        } );
+		
 		JCheckBox coordCheck = new JCheckBox("Afficher les coordonnées de l'adhérent");
 		JCheckBox pretsCheck = new JCheckBox("Afficher les prêts en cours");
 		

@@ -13,11 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import mediatheque.Adherents;
+
 public class SupprimerAdherent extends JDialog {
 	
-	public SupprimerAdherent()
+	private Adherents adherents;
+	
+	public SupprimerAdherent(Adherents adherents)
 	{
 		super();
+		this.adherents = adherents;
 		build();
 	}
 	

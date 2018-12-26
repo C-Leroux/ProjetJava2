@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,11 +13,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class NouvelAdherent extends JDialog {
+import mediatheque.Adherent;
+import mediatheque.Adherents;
+
+public class NouvelAdherent extends JDialog implements ActionListener {
 	
-	public NouvelAdherent()
+	private JTextField textNom;
+	private JTextField textPrenom;
+	private JTextField textAdresse;
+	
+	private JButton valider;
+	private JButton annuler;
+	
+	private Adherents adherents;
+	
+	public NouvelAdherent(Adherents adherents)
 	{
 		super();
+		this.adherents = adherents;
 		build();
 	}
 	
@@ -41,12 +56,15 @@ public class NouvelAdherent extends JDialog {
 		JLabel adresse = new JLabel("Adresse", JLabel.LEFT);
 		
 		int text_size = 10;
-		JTextField textNom = new JTextField(text_size);
-		JTextField textPrenom = new JTextField(text_size);
-		JTextField textAdresse = new JTextField(text_size);
+		textNom = new JTextField(text_size);
+		textPrenom = new JTextField(text_size);
+		textAdresse = new JTextField(text_size);
 		
-		JButton valider = new JButton("Valider");
-		JButton annuler = new JButton("Annuler");
+		valider = new JButton("Valider");
+		annuler = new JButton("Annuler");
+		
+		valider.addActionListener(this);
+		annuler.addActionListener(this);
 		
 		GridBagConstraints gbc;
 		
@@ -96,4 +114,19 @@ public class NouvelAdherent extends JDialog {
 		
 		return gbc;
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		
+		if (source == valider)
+		{
+			String nom = textNom.getText();
+			String prenom = textPrenom.getText();
+			String adresse = textAdresse.getText();
+			adherents.addAdherent(new Adherent(nom, prenom, adresse));
+		}
+		this.dispose();
+	}
+	
 }
