@@ -125,6 +125,7 @@ public class NouvelAdherent extends JDialog implements ActionListener {
 			String prenom = textPrenom.getText();
 			String adresse = textAdresse.getText();
 			adherents.addAdherent(new Adherent(nom, prenom, adresse));
+			System.out.println(adherents.getAdherents());
 		}
 		this.dispose();
 	}

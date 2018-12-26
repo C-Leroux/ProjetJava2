@@ -41,10 +41,13 @@ public Vector<Adherent> getAdherents() {
 	return adherents;
 }
 
+public void removeAdherent(Adherent adherent)
+{
+	adherents.remove(adherent);
+}
+
 public void addAdherent(Adherent adherent) {
-  if (adherents.indexOf(adherent) != -1) {
     adherents.add(adherent);
-  }
 }
 
 public void run() {

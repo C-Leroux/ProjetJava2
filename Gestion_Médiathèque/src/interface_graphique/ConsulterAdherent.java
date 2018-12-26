@@ -2,10 +2,17 @@ package interface_graphique;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Hashtable;
+import java.util.Set;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,22 +25,35 @@ import javax.swing.JTextField;
 
 import mediatheque.Adherent;
 import mediatheque.Adherents;
+import mediatheque.Exemplaire;
+import mediatheque.Pret;
 
-public class ConsulterAdherent extends JDialog {
+public class ConsulterAdherent extends JDialog implements ActionListener {
 	
 	private Adherents adherents;
+	private Adherent adherent;
+	
+	private JComboBox<Adherent> listeAdh;
+	private JCheckBox coordCheck;
+	private JCheckBox pretsCheck;
+	
+	private JButton valider;
+	private JButton annuler;
+	
+	private JPanel panel2;
 	
 	public ConsulterAdherent(Adherents adherents)
 	{
 		super();
 		this.adherents = adherents;
+		this.adherent = null;
 		build();
 	}
 	
 	private void build()
 	{
 		setTitle("Consulter les adhérents");
-		setSize(300, 200);
+		setSize(600, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -46,12 +66,13 @@ public class ConsulterAdherent extends JDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(Color.white);
+		panel.setAlignmentX(LEFT_ALIGNMENT);
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
 		
 		// On cree la Combo Box contenant la liste des adherents, puis on lui donne un renderer qui va permettre
 		// d'afficher le nom complet des adherents de la liste
-		JComboBox<Adherent> listeAdh = new JComboBox<Adherent>(adherents.getAdherents());
+		listeAdh = new JComboBox<Adherent>(adherents.getAdherents());
 		listeAdh.setRenderer(new DefaultListCellRenderer() {
             @Override
             public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -64,11 +85,14 @@ public class ConsulterAdherent extends JDialog {
             }
         } );
 		
-		JCheckBox coordCheck = new JCheckBox("Afficher les coordonnées de l'adhérent");
-		JCheckBox pretsCheck = new JCheckBox("Afficher les prêts en cours");
+		coordCheck = new JCheckBox("Afficher les coordonnées de l'adhérent");
+		pretsCheck = new JCheckBox("Afficher les prêts en cours");
 		
-		JButton valider = new JButton("Valider");
-		JButton annuler = new JButton("Annuler");
+		valider = new JButton("Valider");
+		annuler = new JButton("Annuler");
+		
+		valider.addActionListener(this);
+		annuler.addActionListener(this);
 		
 		GridBagConstraints gbc;
 		
@@ -92,7 +116,16 @@ public class ConsulterAdherent extends JDialog {
 		gbc = buildConstraints(1, 3);
 		panel.add(annuler, gbc);
 		
-		return panel;
+		panel2 = new JPanel();
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+		panel2.setPreferredSize(new Dimension(300,200));
+		
+		JPanel global = new JPanel();
+		global.setLayout(new BoxLayout(global, BoxLayout.LINE_AXIS));
+		global.add(panel);
+		global.add(panel2);
+		
+		return global;
 	}
 	
 	private GridBagConstraints buildConstraints(int x, int y)
@@ -109,4 +142,42 @@ public class ConsulterAdherent extends JDialog {
 		
 		return gbc;
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		
+		if (source == valider)
+		{
+			panel2.removeAll();
+			Adherent adherent = (Adherent) listeAdh.getSelectedItem();
+			panel2.add(new JLabel("Nom de l'adhérent : " + adherent.getNomPrenom()));
+			
+			if (coordCheck.isSelected())
+			{
+				panel2.add(new JLabel("Adresse : " + adherent.getAdresse()));
+			}
+			
+			if (pretsCheck.isSelected())
+			{
+				Hashtable<Exemplaire,Pret> prets = adherent.getdicExemplaiPret();
+				
+				Set<Exemplaire> keys = prets.keySet();
+				for (Exemplaire key : keys)
+				{
+					Box box = Box.createHorizontalBox();
+					box.add(new JLabel(key.toString()));
+					box.add(new JLabel(key.getOeuvre().toString()));
+					box.add(new JLabel(prets.get(key).toString()));
+					panel2.add(box);
+				}
+			}
+			validate();
+			repaint();
+		}
+		else
+			dispose();
+		
+	}
+	
 }

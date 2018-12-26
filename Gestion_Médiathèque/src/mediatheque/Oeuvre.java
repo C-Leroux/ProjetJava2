@@ -52,9 +52,12 @@ public class Oeuvre {
     	//exemplaires.iterator().hasNext();
     	return null;
     }
-    /*
+    
     public String toString() {
-        return "";
+    	String str = "";
+    	str += "Titre : " + titre + "\n";
+    	str += "Auteur : " + auteur + "\n";
+        return str;
     }
-    */
+    
 }

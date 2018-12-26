@@ -9,6 +9,16 @@ public class Exemplaire {
         this.numero = numero;
         this.oeuvre = oeuvre;
     }
+    
+    public int getNumero()
+    {
+    	return numero;
+    }
+    
+    public Oeuvre getOeuvre()
+    {
+    	return oeuvre;
+    }
 
     public String toJson()
     {
@@ -19,9 +29,11 @@ public class Exemplaire {
   			 "}\n";
   	    return exStr;
     }
-    /*
+    
     public String toString() {
-        return "";
+    	String str = "";
+    	str += "Numéro de l'exemplaire : " + numero + "\n";
+        return str;
     }
-    */
+    
 }

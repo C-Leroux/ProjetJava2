@@ -1,4 +1,5 @@
 package mediatheque;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.Date;
@@ -18,11 +19,15 @@ public class Pret {
     	return this.fin;
     }
 
-    /*
+    
     public String toString() {
-        return "";
+    	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+    	String str = "";
+    	str += "Date du prêt : " + format.format(debut) + "\n";
+    	str += "Date butoire : " + format.format(fin) + "\n";
+        return str;
     }
-    */
+    
     
     public String toJson() {
     	String strPret = new String();

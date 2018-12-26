@@ -10,7 +10,7 @@ public class Adherent {
   private String nom;
   private String prenom;
   private String adresse;
-  private Hashtable dicoExemplairePret = new Hashtable();
+  private Hashtable<Exemplaire,Pret> dicoExemplairePret = new Hashtable<Exemplaire,Pret>();
   private ArrayList<DelaiRestitutionDepasseListener> events = new ArrayList<DelaiRestitutionDepasseListener>();
 
   public Adherent(String nom, String prenom, String adresse) {
@@ -22,6 +22,11 @@ public class Adherent {
   public String getNomPrenom()
   {
 	  return nom + " " + prenom;
+  }
+  
+  public String getAdresse()
+  {
+	  return adresse;
   }
 
   public Exemplaire emprunter(Oeuvre oeuvre) {
@@ -46,7 +51,7 @@ public class Adherent {
 	  
   }
   
-  public Hashtable getdicExemplaiPret() {
+  public Hashtable<Exemplaire,Pret> getdicExemplaiPret() {
 	  return this.dicoExemplairePret;
   }
   

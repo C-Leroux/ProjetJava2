@@ -1,21 +1,32 @@
 package interface_graphique;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
+import mediatheque.Adherent;
 import mediatheque.Adherents;
 
-public class SupprimerAdherent extends JDialog {
+public class SupprimerAdherent extends JDialog implements ActionListener {
+	
+	private JButton valider;
+	private JButton annuler;
+	
+	private JComboBox<Adherent> listeAdh;
 	
 	private Adherents adherents;
 	
@@ -45,10 +56,26 @@ public class SupprimerAdherent extends JDialog {
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
 		
-		JComboBox listeAdh = new JComboBox();
+		// On cree la Combo Box contenant la liste des adherents, puis on lui donne un renderer qui va permettre
+		// d'afficher le nom complet des adherents de la liste
+		listeAdh = new JComboBox<Adherent>(adherents.getAdherents());
+		listeAdh.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Adherent){
+                    Adherent adherent = (Adherent) value;
+                    setText(adherent.getNomPrenom());
+                }
+                return this;
+            }
+        } );
 		
-		JButton valider = new JButton("Valider");
-		JButton annuler = new JButton("Annuler");
+		valider = new JButton("Valider");
+		annuler = new JButton("Annuler");
+		
+		valider.addActionListener(this);
+		annuler.addActionListener(this);
 		
 		GridBagConstraints gbc;
 		
@@ -80,6 +107,19 @@ public class SupprimerAdherent extends JDialog {
 		gbc.gridy = y;
 		
 		return gbc;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		Object source = e.getSource();
+		
+		if (source == valider)
+		{
+			Adherent adherent = (Adherent) listeAdh.getSelectedItem();
+			adherents.removeAdherent(adherent);
+		}
+		this.dispose();
 	}
 
 }
