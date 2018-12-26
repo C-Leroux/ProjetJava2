@@ -1,81 +1,95 @@
 package mediatheque;
 
-import java.util.Calendar;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class Adherent {
-	Hashtable dicoExemplairePret = new Hashtable();
-	private String nom;
-	private String prenom;
-	private String adresse;
-	
-	public Adherent(String nom, String prenom, String adresse)
-	{
-		this.nom = nom;
-		this.prenom = prenom;
-		this.adresse = adresse;
-	}
-	
-	public String getNom(){
-		return this.nom;
-	}
-	
-	public String getPrenom(){
-		return this.prenom;
-	}
-	
-	public String getAdresse(){
-		return this.adresse;
-	}
-	
-	
-	public Exemplaire emprunter(Oeuvre oeuvre){
-		int nbExemplaire = oeuvre.getNombreExemplaire();
-		if( nbExemplaire > 1)
-		{
-			// recupere l'exemplaire
-			Exemplaire exemplaire = oeuvre.getListExElmIndex(nbExemplaire - 1);
 
-			// date de début et date de fin (date de fin 1 mois apres l'empreint)
+  private String nom;
+  private String prenom;
+  private String adresse;
+  private Hashtable dicoExemplairePret = new Hashtable();
+  private ArrayList<DelaiRestitutionDepasseListener> events = new ArrayList<DelaiRestitutionDepasseListener>();
 
-			Calendar dateDebut = Calendar.getInstance();
-			Calendar dateFin = Calendar.getInstance(); 
-			dateFin.add(Calendar.MONTH, 1);
-			
-			// faire le pret
-			Pret pret = new Pret(exemplaire.getNumero(),dateDebut, dateFin);
-			
-			// ajoute dans la table de hash le livre
-			dicoExemplairePret.put(exemplaire, pret);
-			// decremente le nombre de livre dans la mediatheque
-			oeuvre.setNombreExemplaire(nbExemplaire - 1);
-			return exemplaire;
-			
-		}
-		// sinon pas possible pas d'exemplaire disponible
-		// exception "il n'y a plus d'exemplaire disponible"
-		
-		return null;
-	}
-	public void ramener(Exemplaire exemplaire){
-		// retourner une erreur
-		if(exemplaire == null)
-			return;
-		Exemplaire e = (Exemplaire) dicoExemplairePret.remove(exemplaire);
-		if (e != null)
-		{
-			// appel la fonction ramener de l'exemplaire qui incremente 
-			exemplaire.ramener();
-		}
-		 // erreur l'element retourner n'est pas dans la liste des empreints
-			
-		
-	}
-	
-	public String toString(){
-		return this.nom + " " + this.prenom;
-	}
+  public Adherent(String nom, String prenom, String adresse) {
+    this.nom = nom;
+    this.prenom = prenom;
+    this.adresse = adresse;
+  }
 
+  public Exemplaire emprunter(Oeuvre oeuvre) {
+    Exemplaire exemplaire = oeuvre.emprunter();
+    Pret pret = new Pret(exemplaire.numero, null, null);
+    if (exemplaire != null) {
+      dicoExemplairePret.put(exemplaire, pret);
+      return exemplaire;
+    }
+    return null;
+  }
+
+  public void ramener(Exemplaire exemplaire) {
+      dicoExemplairePret.remove(exemplaire);
+      exemplaire.oeuvre.ramener(exemplaire);
+  }
+
+  public void addDelaiRestitutionDepasseListener(DelaiRestitutionDepasseListener l) {
+	  if(events.indexOf(l) > -1)
+		  return ;
+	  events.add(l);
+	  
+  }
+  
+  public Hashtable getdicExemplaiPret() {
+	  return this.dicoExemplairePret;
+  }
+  
+  
+  
+  public String toJSon()
+  {
+	  String adherentStr = new String(); 
+	  adherentStr = "{ \"Adherent\": {\n" + 
+			 " \"nom\": \"" + this.nom + "\"" + 
+			 " \"prenom\": \"" + this.prenom + "\"" +
+			 " \"adresse\": \"" + this.adresse + "\"" ;
+	  adherentStr += toJsonHashtable() + toJsonEvents();
+	  adherentStr += "}\n";
+	  
+	  return adherentStr;
+  }
+  
+  public String toJsonHashtable() {
+	  String hashStr = new String();
+	  hashStr = "\"dicoExemplairePret\": <Exemplaire, Pret> \n[";
+	  for(Enumeration e = dicoExemplairePret.elements(); e.hasMoreElements();)
+	  {
+		  Pret pret = (Pret)e.nextElement();
+		  Exemplaire exemplaire = (Exemplaire) dicoExemplairePret.get(pret);
+		  String exStr = exemplaire.toJson();
+		  String pretStr = pret.toJson(); 
+		  hashStr += "{\n k : { " + exStr + " },\n";
+		  hashStr += " v : { " + pretStr + " }\n}\n";
+	  }
+	  hashStr += "]";
+	  return hashStr; 
+	  
+  }
+  public String toJsonEvents()
+  {
+	  String evtsStr = new String();
+	  evtsStr = "\"Events\":\n{\n";
+	  for(int i = 0; i < events.size(); i++) {
+		 evtsStr += events.get(i).toJson() + "\n";
+	  }
+	  evtsStr += "}\n";
+	  return evtsStr;
+  }
+  
+  /*
+  public String toString() {
+      return "";
+  }
+  */
 }

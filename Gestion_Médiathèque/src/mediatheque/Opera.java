@@ -1,8 +1,8 @@
 package mediatheque;
 
-public class Varietee extends Oeuvre {
-    
-    public Varietee(String titre, String auteur, int nbExemplaire) {
+public class Opera extends Oeuvre {
+
+    public Opera(String titre, String auteur, int nbExemplaire) {
         super(titre, auteur, nbExemplaire);
     }
 
