@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.Hashtable;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
@@ -66,7 +67,7 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(Color.white);
-		panel.setAlignmentX(LEFT_ALIGNMENT);
+		panel.setAlignmentY(TOP_ALIGNMENT);
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
 		
@@ -119,6 +120,7 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		panel2 = new JPanel();
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
 		panel2.setPreferredSize(new Dimension(300,200));
+		panel2.setAlignmentY(TOP_ALIGNMENT);
 		
 		JPanel global = new JPanel();
 		global.setLayout(new BoxLayout(global, BoxLayout.LINE_AXIS));
@@ -150,12 +152,18 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		if (source == valider)
 		{
 			panel2.removeAll();
+			
 			Adherent adherent = (Adherent) listeAdh.getSelectedItem();
-			panel2.add(new JLabel("Nom de l'adhérent : " + adherent.getNomPrenom()));
+			if (adherent == null)
+				return;
+			
+			Box box = Box.createVerticalBox();
+			box.setAlignmentY(TOP_ALIGNMENT);
+			box.add(new JLabel("Nom de l'adhérent : " + adherent.getNomPrenom()));
 			
 			if (coordCheck.isSelected())
 			{
-				panel2.add(new JLabel("Adresse : " + adherent.getAdresse()));
+				box.add(new JLabel("Adresse : " + adherent.getAdresse()));
 			}
 			
 			if (pretsCheck.isSelected())
@@ -165,13 +173,14 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 				Set<Exemplaire> keys = prets.keySet();
 				for (Exemplaire key : keys)
 				{
-					Box box = Box.createHorizontalBox();
-					box.add(new JLabel(key.toString()));
-					box.add(new JLabel(key.getOeuvre().toString()));
-					box.add(new JLabel(prets.get(key).toString()));
-					panel2.add(box);
+					Box box2 = Box.createHorizontalBox();
+					box2.add(new JLabel(key.toString()));
+					box2.add(new JLabel(key.getOeuvre().toString()));
+					box2.add(new JLabel(prets.get(key).toString()));
+					box.add(box2);
 				}
 			}
+			panel2.add(box);
 			validate();
 			repaint();
 		}

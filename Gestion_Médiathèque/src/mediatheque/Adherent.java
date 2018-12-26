@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Set;
+
+import javax.swing.Box;
+import javax.swing.JLabel;
 
 public class Adherent {
 
@@ -73,14 +77,14 @@ public class Adherent {
   public String toJsonHashtable() {
 	  String hashStr = new String();
 	  hashStr = "\"dicoExemplairePret\": <Exemplaire, Pret> \n[";
-	  for(Enumeration e = dicoExemplairePret.elements(); e.hasMoreElements();)
+	  Set<Exemplaire> keys = dicoExemplairePret.keySet();
+	  for (Exemplaire exemplaire : keys)
 	  {
-		  Pret pret = (Pret)e.nextElement();
-		  Exemplaire exemplaire = (Exemplaire) dicoExemplairePret.get(pret);
-		  String exStr = exemplaire.toJson();
-		  String pretStr = pret.toJson(); 
-		  hashStr += "{\n k : { " + exStr + " },\n";
-		  hashStr += " v : { " + pretStr + " }\n}\n";
+			Pret pret = dicoExemplairePret.get(exemplaire);
+			String exStr = exemplaire.toJson();
+			String pretStr = pret.toJson(); 
+			hashStr += "{\n k : { " + exStr + " },\n";
+			hashStr += " v : { " + pretStr + " }\n}\n";
 	  }
 	  hashStr += "]";
 	  return hashStr; 
