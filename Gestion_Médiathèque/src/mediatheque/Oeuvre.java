@@ -1,8 +1,7 @@
 package mediatheque;
 
+import java.util.Iterator;
 import java.util.Stack;
-
-
 
 public class Oeuvre {
     private String titre;
@@ -20,6 +19,14 @@ public class Oeuvre {
         }
     }
 
+    public String getTitre() {
+    	return this.titre;
+    }
+    
+    public String getAuteur() {
+    	return this.auteur;
+    }
+    
     public Exemplaire emprunter() {
         if (!exemplaires.empty()) {
             return exemplaires.pop();
@@ -41,16 +48,23 @@ public class Oeuvre {
    			 " \"titre\": \"" + this.titre + "\"" + 
    			 " \"auteur\": \"" + this.auteur + "\"" +
    			 " \"nbExemplaire\": " + this.nbExemplaire;
-    	
-
+    	oeuvreStr = oeuvreStr + toJsonExemplaire() + "}\n";
     	return oeuvreStr;
     }
     
     public String toJsonExemplaire() {
     	String exStr = new String();
-    	//exemplaires.i
-    	//exemplaires.iterator().hasNext();
-    	return null;
+    	exStr = "{ \"exemplaires\": {\n";
+    	
+    	Iterator itr = exemplaires.iterator();
+    	while(itr.hasNext()) {
+    		exStr += "{\n";
+    		Exemplaire exemplaire = (Exemplaire)itr.next();
+    		exStr += exemplaire.toJson();
+    		exStr += "}\n";
+    	}
+    	exStr += "}\n";
+    	return exStr;
     }
     /*
     public String toString() {

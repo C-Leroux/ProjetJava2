@@ -14,6 +14,7 @@ public class Exemplaire {
     {
     	String exStr = new String(); 
   	    exStr = "{ \"Exemplaire\": {\n" + 
+  	    	 " \"id\": \"" + this.oeuvre.getTitre() + ":" + this.oeuvre.getAuteur() + "\"\n" +
   			 " \"nom\": \"" + this.numero + "\"\n" + 
   			 " \"prenom\": \"" + this.oeuvre + "\"\n" + 
   			 "}\n";
