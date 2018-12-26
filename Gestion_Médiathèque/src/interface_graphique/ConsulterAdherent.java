@@ -39,12 +39,10 @@ public class ConsulterAdherent extends JDialog {
 		panel.setBackground(Color.white);
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
-		JLabel coord = new JLabel("Afficher les coordonnées de l'adhérent", JLabel.LEFT);
-		JLabel prets = new JLabel("Afficher les prêts en cours", JLabel.LEFT);
 		
 		JComboBox listeAdh = new JComboBox();
-		JCheckBox coordCheck = new JCheckBox();
-		JCheckBox pretsCheck = new JCheckBox();
+		JCheckBox coordCheck = new JCheckBox("Afficher les coordonnées de l'adhérent");
+		JCheckBox pretsCheck = new JCheckBox("Afficher les prêts en cours");
 		
 		JButton valider = new JButton("Valider");
 		JButton annuler = new JButton("Annuler");
@@ -55,25 +53,20 @@ public class ConsulterAdherent extends JDialog {
 		panel.add(liste, gbc);
 		
 		gbc = buildConstraints(0, 1);
+		gbc.gridwidth = 2;
 		panel.add(coordCheck, gbc);
 		
 		gbc = buildConstraints(0, 2);
+		gbc.gridwidth = 2;
 		panel.add(pretsCheck, gbc);
 		
 		gbc = buildConstraints(1, 0);
 		panel.add(listeAdh, gbc);
 		
-		gbc = buildConstraints(1, 1);
-		panel.add(coord, gbc);
-		
-		gbc = buildConstraints(1, 2);
-		gbc.gridwidth = 2;
-		panel.add(prets, gbc);
-		
-		gbc = buildConstraints(1, 3);
+		gbc = buildConstraints(0, 3);
 		panel.add(valider, gbc);
 		
-		gbc = buildConstraints(2, 3);
+		gbc = buildConstraints(1, 3);
 		panel.add(annuler, gbc);
 		
 		return panel;
@@ -85,8 +78,8 @@ public class ConsulterAdherent extends JDialog {
 		
 		gbc.insets = new Insets(5, 0, 5, 5);
 
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.anchor = GridBagConstraints.WEST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.WEST;
 		
 		gbc.gridx = x;
 		gbc.gridy = y;
