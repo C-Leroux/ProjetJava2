@@ -23,7 +23,7 @@ public class SupprimerAdherent extends JDialog {
 	
 	private void build()
 	{
-		setTitle("Consulter les adhérents");
+		setTitle("Supprimer un adhérent");
 		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
