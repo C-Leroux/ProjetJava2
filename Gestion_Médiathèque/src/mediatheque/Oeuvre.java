@@ -44,19 +44,19 @@ public class Oeuvre {
     public String toJson()
     {
     	String oeuvreStr = new String();
-    	oeuvreStr = "{ \"Adherent\": {\n" + 
+    	oeuvreStr = "{ \"Oeuvre\": {\n" + 
    			 " \"titre\": \"" + this.titre + "\"" + 
    			 " \"auteur\": \"" + this.auteur + "\"" +
    			 " \"nbExemplaire\": " + this.nbExemplaire;
-    	oeuvreStr = oeuvreStr + toJsonExemplaire() + "}\n";
+    	oeuvreStr = oeuvreStr + toJsonExemplaire() + "                 }\n";
     	return oeuvreStr;
     }
     
-    public String toJsonExemplaire() {
+    private String toJsonExemplaire() {
     	String exStr = new String();
     	exStr = "{ \"exemplaires\": {\n";
     	
-    	Iterator itr = exemplaires.iterator();
+    	Iterator<Exemplaire> itr = exemplaires.iterator();
     	while(itr.hasNext()) {
     		exStr += "{\n";
     		Exemplaire exemplaire = (Exemplaire)itr.next();
@@ -69,9 +69,20 @@ public class Oeuvre {
     
     public String toString() {
     	String str = "";
-    	str += "Titre : " + titre + "\n";
-    	str += "Auteur : " + auteur + "\n";
+    	str += " Titre : " + titre + "\n";
+    	str += " Auteur : " + auteur + "\n";
         return str;
+    }
+    
+    
+    public String toJS()
+    {
+    	String oeuvreStr = new String();
+    	oeuvreStr = " \"Oeuvre\": {\n" + 
+   			 "                      \"titre\": \"" + this.titre + "\"\n" + 
+   			 "                      \"auteur\": \"" + this.auteur + "\"\n" +
+   			 "                      \"nbExemplaire\": " + this.nbExemplaire + "\n                         }\n";
+    	return oeuvreStr;
     }
     
 }

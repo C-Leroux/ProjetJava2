@@ -23,7 +23,7 @@ public class Pret {
     public String toString() {
     	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
     	String str = "";
-    	str += "Date du prêt : " + format.format(debut) + "\n";
+    	str += "Date du pret : " + format.format(debut) + "\n";
     	str += "Date butoire : " + format.format(fin) + "\n";
         return str;
     }
@@ -32,10 +32,10 @@ public class Pret {
     public String toJson() {
     	String strPret = new String();
     	strPret = "{ \"Pret\": {\n" + 
-   			 " \"numero\": \"" + this.numero + "\"\n" + 
-   			 " \"debut\": \"" + this.debut + "\"\n" +
-   			 " \"fin\": \"" + this.fin + "\"\n" +
-   			 "}\n";
+   			 "                      \"numero\": \"" + this.numero + "\"\n" + 
+   			 "                      \"debut\": \"" + this.debut + "\"\n" +
+   			 "                      \"fin\": \"" + this.fin + "\"\n" +
+   			 "                        }\n" + "               }\n";
     	return strPret;
     }
 }

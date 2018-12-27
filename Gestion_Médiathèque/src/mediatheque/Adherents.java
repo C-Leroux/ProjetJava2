@@ -1,6 +1,9 @@
 package mediatheque;
 
 import java.util.Date;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 //import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -18,7 +21,20 @@ public Adherents() {
 }
 
 public void sauvegarder() {
-	  
+	String str = new String();
+	  // 
+	  try {
+		PrintWriter fichier = new PrintWriter("sauvegarde.json", "UTF-8");
+		str = toJson();
+		fichier.print(str);
+		fichier.close();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (UnsupportedEncodingException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 }
 
 public String toJson()
@@ -30,11 +46,19 @@ public String toJson()
 		  str += adherents.get(i).toJSon();
 	  }
 	  str += "}\n";
+	  System.out.println(str);
 	  return str;
 }
 
 public Adherent getAdherent(String nom, String prenom, String adresse) {
-	  return null;
+	
+	for(int i = 0; i < adherents.size() ;i++)
+	{
+		if(adherents.get(i).getNom().compareTo(nom) == 0 && adherents.get(i).getPrenom().compareTo(prenom) == 0 && adherents.get(i).getAdresse().compareTo(adresse) == 0) {
+			return adherents.get(i);
+		}
+	}
+	return null;
 }
 
 public Vector<Adherent> getAdherents() {

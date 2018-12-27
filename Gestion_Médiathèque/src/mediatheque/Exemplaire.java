@@ -23,17 +23,17 @@ public class Exemplaire {
     public String toJson()
     {
     	String exStr = new String(); 
-  	    exStr = "{ \"Exemplaire\": {\n" + 
-  	    	 " \"id\": \"" + this.oeuvre.getTitre() + ":" + this.oeuvre.getAuteur() + "\"\n" +
-  			 " \"nom\": \"" + this.numero + "\"\n" + 
-  			 " \"prenom\": \"" + this.oeuvre + "\"\n" + 
-  			 "}\n";
+  	    exStr = " \"Exemplaire\": {\n" + 
+  	    	 "              \"id\": \"" + this.oeuvre.getTitre() + ":" + this.oeuvre.getAuteur() + "\"\n" +
+  			 "              \"numero\": \"" + this.numero + "\"\n" + 
+  			 "              \"oeuvre\": {" + this.oeuvre.toJson() + "                       }\n" + 
+  			 "                 }\n";
   	    return exStr;
     }
     
     public String toString() {
     	String str = "";
-    	str += "Numéro de l'exemplaire : " + numero + "\n";
+    	str += "Numero de l'exemplaire : " + numero + "\n";
         return str;
     }
     
