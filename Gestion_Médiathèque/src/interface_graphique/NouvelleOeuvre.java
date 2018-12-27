@@ -24,6 +24,8 @@ import javax.swing.SpinnerNumberModel;
 import mediatheque.Adherent;
 import mediatheque.Oeuvre;
 import mediatheque.Oeuvres;
+import mediatheque.Opera;
+import mediatheque.Varietee;
 
 public class NouvelleOeuvre extends JDialog implements ActionListener {
 	
@@ -155,7 +157,9 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 			String auteur = textAuteur.getText();
 			int nb = (Integer) nbExemplaires.getValue();
 			if (opera.isSelected())
-				oeuvres.addOeuvre(new Oeuvre(nom, auteur, nb));
+				oeuvres.addOeuvre(new Opera(nom, auteur, nb));
+			else
+				oeuvres.addOeuvre(new Varietee(nom, auteur, nb));
 		}
 		this.dispose();
 	}

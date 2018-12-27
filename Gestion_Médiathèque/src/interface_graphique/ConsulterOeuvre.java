@@ -59,7 +59,7 @@ public class ConsulterOeuvre extends JDialog implements ActionListener {
 	
 	private void build()
 	{
-		setTitle("Consulter les adhérents");
+		setTitle("Consulter les oeuvres");
 		setSize(600, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
@@ -152,6 +152,7 @@ public class ConsulterOeuvre extends JDialog implements ActionListener {
 		box.setAlignmentY(TOP_ALIGNMENT);
 		box.add(new JLabel("Oeuvre : " + oeuvre.getTitre()));
 		box.add(new JLabel("Auteur : " + oeuvre.getAuteur()));
+		box.add(new JLabel("Genre : " + oeuvre.getGenre()));
 		
 		if (exemplaireCheck.isSelected())
 		{

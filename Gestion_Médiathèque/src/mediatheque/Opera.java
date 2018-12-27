@@ -6,6 +6,11 @@ public class Opera extends Oeuvre {
         super(titre, auteur, nbExemplaire);
     }
     
+    public String getGenre()
+    {
+    	return "Opéra";
+    }
+    
     public String toString() {
     	String str = "";
     	str += " Genre : Opera\n";

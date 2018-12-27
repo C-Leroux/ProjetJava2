@@ -3,7 +3,7 @@ package mediatheque;
 import java.util.Iterator;
 import java.util.Stack;
 
-public class Oeuvre {
+public abstract class Oeuvre {
     private String titre;
     private String auteur;
     private int nbExemplaire;
@@ -26,6 +26,8 @@ public class Oeuvre {
     public String getAuteur() {
     	return this.auteur;
     }
+    
+    public abstract String getGenre();
     
     public Exemplaire emprunter() {
         if (!exemplaires.empty()) {
