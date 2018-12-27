@@ -18,8 +18,20 @@ public class Pret {
         this.fin = fin;
     }
     
+    public Date getDebut() {
+    	return debut;
+    }
+    
     public Date getFin() {
-    	return this.fin;
+    	return fin;
+    }
+    
+    public String getFormatDebut(SimpleDateFormat format) {
+    	return format.format(debut);
+    }
+    
+    public String getFormatFin(SimpleDateFormat format) {
+    	return format.format(fin);
     }
 
     

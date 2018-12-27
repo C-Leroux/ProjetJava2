@@ -46,27 +46,13 @@ public class Adherent {
   }
 
 
-  public Exemplaire emprunter(Oeuvre oeuvre) throws ParseException {
-	//Calendar today = Calendar.getInstance();
-	//Date dateDebut = today.getTime();
-    Exemplaire exemplaire = oeuvre.emprunter();
-
-    Calendar dateDebut = Calendar.getInstance();
-	Calendar dateFin = Calendar.getInstance(); 
-	dateFin.add(Calendar.MONTH, 1);
-	
-	SimpleDateFormat format1 = new SimpleDateFormat("dd/MM/yyyy");
-    String strdebut = format1.format(dateDebut.getTime());
-    String strfin =  format1.format(dateFin.getTime());
-  
-    Date debutDate = new SimpleDateFormat("dd/MM/yyyy").parse(strdebut);
-    Date debutFin = new SimpleDateFormat("dd/MM/yyyy").parse(strfin);
-    Pret pret = new Pret(exemplaire.numero, debutDate, debutFin);
-    if (exemplaire != null) {
-      dicoExemplairePret.put(exemplaire, pret);
-      return exemplaire;
-    }
-    return null;
+  public Exemplaire emprunter(Oeuvre oeuvre, Date dateFin) {
+	  Calendar today = Calendar.getInstance();
+	  Date dateDebut = today.getTime();
+	  Exemplaire exemplaire = oeuvre.emprunter();
+	  Pret pret = new Pret(exemplaire.numero, dateDebut, dateFin);
+	  dicoExemplairePret.put(exemplaire, pret);
+	  return exemplaire;
   }
 
   public void ramener(Exemplaire exemplaire) {

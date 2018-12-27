@@ -159,7 +159,7 @@ public class ConsulterOeuvre extends JDialog implements ActionListener {
 			box.add(new JLabel("Nombre total d'exemplaires : " + oeuvre.getNb()));
 			box.add(new JLabel("Nombre d'exemplaires disponibles : " + oeuvre.getDispo()));
 			
-			SpinnerModel model = new SpinnerNumberModel();
+			SpinnerModel model = new SpinnerNumberModel(0, 0, 1000, 1);
 			nbExemplaires = new JSpinner(model);
 			Component editor = nbExemplaires.getEditor();
 			JFormattedTextField field = ((JSpinner.DefaultEditor) editor).getTextField();

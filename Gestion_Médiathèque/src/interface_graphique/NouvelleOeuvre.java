@@ -20,6 +20,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import mediatheque.Adherent;
 import mediatheque.Oeuvre;
@@ -73,7 +75,32 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		textNom = new JTextField(text_size);
 		textAuteur = new JTextField(text_size);
 		
-		SpinnerModel model = new SpinnerNumberModel();
+		DocumentListener dl = new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				changed();
+			}
+
+			public void changed() {
+				if (textNom.getText().equals("") || textAuteur.getText().equals("")){
+					valider.setEnabled(false);
+				}
+				else {
+					valider.setEnabled(true);
+				}
+		
+			}
+		};
+		
+		textNom.getDocument().addDocumentListener(dl);
+		textAuteur.getDocument().addDocumentListener(dl);
+		
+		SpinnerModel model = new SpinnerNumberModel(0, 0, 1000, 1);
 		nbExemplaires = new JSpinner(model);
 		
 		opera = new JRadioButton("Opéra");
@@ -88,6 +115,8 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		
 		valider = new JButton("Valider");
 		annuler = new JButton("Annuler");
+		
+		valider.setEnabled(false);
 		
 		valider.addActionListener(this);
 		annuler.addActionListener(this);

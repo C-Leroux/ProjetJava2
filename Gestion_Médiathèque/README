@@ -1,0 +1,18 @@
+Application de Gestion d'une Médiathèque
+
+Lancer l'application :
+
+- Ouvrir le projet Gestion_Médiathèque sous Eclipse
+- Cliquer sur la classe LancerInterface dans le package interface_graphique
+- Lancer l'exécution du programme
+
+Utiliser l'application :
+
+Le sous-menu Oeuvres permet d'ajouter ou supprimer une oeuvre, ainsi que d'en consulter la liste.
+Il en est de même pour le sous-menu Adhérents.
+
+Le bouton "Prêter un exemplaire" permet de prêter l'exemplaire d'une oeuvre à un adhérent.
+Le bouton "Rendre un exemplaire" permet à un adhérent de rendre un exemplaire précédemment emprunté.
+Le bouton "Sauvegarder la médiathèque" permet de sauvegarder l'état actuel de la médiathèque (liste des adhérents, des oeuvres et des prêts).
+
+Pour une explication détaillée de chaque fenêtre de l'application, vous pouvez consulter le rapport du projet.
