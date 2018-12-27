@@ -40,6 +40,8 @@ public class Rendre extends JDialog implements ActionListener {
 	private JComboBox<Adherent> listeAdh;
 	private JComboBox<Exemplaire> listeExe;
 	
+	JLabel exe = null;
+	
 	private JButton valider;
 	private JButton annuler;
 	
@@ -88,6 +90,8 @@ public class Rendre extends JDialog implements ActionListener {
 		valider = new JButton("Valider");
 		annuler = new JButton("Annuler");
 		
+		valider.setEnabled(false);
+		
 		valider.addActionListener(this);
 		annuler.addActionListener(this);
 		
@@ -131,7 +135,13 @@ public class Rendre extends JDialog implements ActionListener {
 	
 	private void setComboBox()
 	{
-		JLabel exe = new JLabel("Exemplaire à rendre", JLabel.LEFT);
+		if (exe == null)
+			exe = new JLabel("Exemplaire à rendre", JLabel.LEFT);
+		else
+		{
+			panel.remove(exe);
+			panel.remove(listeExe);
+		}
 		
 		Vector<Exemplaire> exemplaires = new Vector<Exemplaire>(adherent.getdicExemplaiPret().keySet());
 		listeExe = new JComboBox<Exemplaire>(exemplaires);
@@ -141,7 +151,7 @@ public class Rendre extends JDialog implements ActionListener {
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if(value instanceof Exemplaire){
                     Exemplaire exemplaire = (Exemplaire) value;
-                    setText(Integer.toString(exemplaire.getNumero())); // TODO : Améliorer l'affichage de l'exemplaire
+                    setText(exemplaire.getOeuvre().getTitre() + ", n°" + Integer.toString(exemplaire.getNumero())); // TODO : Améliorer l'affichage de l'exemplaire
                 }
                 return this;
             }
@@ -173,10 +183,15 @@ public class Rendre extends JDialog implements ActionListener {
 			if (adherent != null)
 			{
 				setComboBox();
-				valider.setEnabled(true);
+				if (listeExe.getSelectedItem() == null)
+					valider.setEnabled(false);
+				else
+					valider.setEnabled(true);
 			}
 			else
 				valider.setEnabled(false);
+			revalidate();
+			repaint();
 		}
 		else
 			this.dispose();

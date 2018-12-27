@@ -91,6 +91,8 @@ public class NouvelAdherent extends JDialog implements ActionListener {
 		valider = new JButton("Valider");
 		annuler = new JButton("Annuler");
 		
+		valider.setEnabled(false);
+		
 		valider.addActionListener(this);
 		annuler.addActionListener(this);
 		
