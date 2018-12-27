@@ -6,6 +6,7 @@ import java.text.ParseException;
 import javax.swing.SwingUtilities;
 
 import mediatheque.Adherents;
+import mediatheque.Bibliothecaire;
 import mediatheque.Oeuvres;
 
 public class LancerInterface {
@@ -13,11 +14,16 @@ public class LancerInterface {
 	 {
 		 Adherents adherents = new Adherents();
 		 try {
-			adherents.restaurer();
+			 adherents.restaurer();
 		 }
 		 catch (IOException e) {}
 		 catch (ParseException e) {}
+		 
 		 Oeuvres oeuvres = new Oeuvres();
+		 try {
+			 oeuvres.restaurer();
+		 }
+		 catch (IOException | ParseException e) {}
 		 
 		 SwingUtilities.invokeLater(new Runnable()
 		 {
