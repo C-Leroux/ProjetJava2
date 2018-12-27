@@ -62,7 +62,7 @@ public class Main {
     	Exemplaire exemplaire2 = adherent1.emprunter(opera1);
     	adherents.sauvegarder(); 
     	adherents.restaurer();
-    	adherents.addAdherent(adherent1);
+    	//adherents.addAdherent(adherent1);
     	Adherent adherentReconstruit = adherents.getAdherent( "Albert", "Durant", "2 allee tataouine" ); 
         System.out.print(adherents.getAdherents().get(0).getNomPrenom());
  
