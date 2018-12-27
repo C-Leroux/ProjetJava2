@@ -1,9 +1,13 @@
 package mediatheque;
 
 import java.util.Date;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 //import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -37,6 +41,29 @@ public void sauvegarder() {
 	}
 }
 
+public void restaurer() throws IOException, ParseException {
+	String str = new String();
+	BufferedReader br;
+	try {
+		br = new BufferedReader(new FileReader("sauvegarde.json"));
+		String line;
+		while ((line = br.readLine()) != null) {
+		   //System.out.println(line);
+		   if(line.indexOf("\"Adherent\"") > 0)
+		   {
+			   Adherent ad1 = Adherent.restaurer(line,line.indexOf("Adherent" + 1));
+			   adherents.add(ad1);
+		   }
+		}
+		br.close();
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+}
+
 public String toJson()
 {
 	  String str = new String();
@@ -45,8 +72,7 @@ public String toJson()
 	  {
 		  str += adherents.get(i).toJSon();
 	  }
-	  str += "}\n";
-	  System.out.println(str);
+	  str += "\n}\n";
 	  return str;
 }
 
@@ -93,6 +119,20 @@ public void run() {
 }
 
 public void addDelaiRestitutionDepasseListener(DelaiRestitutionDepasseListener l) {
+	  
+}
+
+public static String getString(String line, int i) {
+	  String str = "";
+	  for(; i < line.length(); i++ ) {
+		      if(line.charAt(i) == '"') {
+			  return str;
+		  }
+		  else {
+			  str += line.charAt(i);
+		  }
+	  }
+	  return null;
 	  
 }
 

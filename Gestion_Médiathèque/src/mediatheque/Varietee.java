@@ -15,7 +15,7 @@ public class Varietee extends Oeuvre {
     
     public String toJson() {
     	String str = "";
-    	str += " Genre : Varietee\n";
+    	str += " Genre : Varietee";
         return str;
     }
     
@@ -24,5 +24,16 @@ public class Varietee extends Oeuvre {
     	str += " Genre : Varietee\n";
         return str + super.toString();
     }*/
+    
+    public static Varietee restaurer(String line, int index) {
+    	int i = line.indexOf("\"titre\":") + 9;
+  	    String titre = Adherents.getString(line, i);
+  	    i = line.indexOf("\"auteur\":") + 10;
+  	    String auteur = Adherents.getString(line, i);
+  	    i = line.indexOf("\"nbExemplaireO\":") + 17;
+  	    String nbExemplaire = Adherents.getString(line, i);
+  	    Varietee varietee = new Varietee(titre, auteur, Integer.parseInt(nbExemplaire)); 
+    	return varietee;
+    }
     
 }

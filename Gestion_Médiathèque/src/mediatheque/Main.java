@@ -1,15 +1,18 @@
 package mediatheque;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.Vector;
 
 public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws IOException 
+     * @throws ParseException 
      */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    	System.out.println("Coucou");
+    public static void main(String[] args) throws IOException, ParseException {
+        // testPart1();
     	testPart2();
     }
 
@@ -42,7 +45,7 @@ public class Main {
         }
     }
     
-    public static void testPart2() {
+    public static void testPart2() throws IOException, ParseException {
     	// ...
     	//Adherents adherents = new Adherents(2000) ;
     	Adherents adherents = new Adherents();
@@ -58,15 +61,16 @@ public class Main {
     	Opera opera1 = new Opera(titre, auteur, nombreExemplaire);
     	Exemplaire exemplaire2 = adherent1.emprunter(opera1);
     	adherents.sauvegarder(); 
-    	//adherents.restaurer();
+    	adherents.restaurer();
     	adherents.addAdherent(adherent1);
     	Adherent adherentReconstruit = adherents.getAdherent( "Albert", "Durant", "2 allee tataouine" ); 
-  
-    	/*Vector<Exemplaire> exemplairesEmpruntes = adherentReconstruit.getExemplairesEmpruntes();
+        System.out.print(adherents.getAdherents().get(0).getNomPrenom());
+ 
+    	Vector<Exemplaire> exemplairesEmpruntes = adherentReconstruit.getExemplairesEmpruntes();
     	for( int i=0; i<exemplairesEmpruntes.size(); i++ ){
     		exemplaire = (Exemplaire)exemplairesEmpruntes.elementAt(i); 
     	    adherentReconstruit.ramener(exemplaire);
-    	}*/
+    	}
 
 
     }
