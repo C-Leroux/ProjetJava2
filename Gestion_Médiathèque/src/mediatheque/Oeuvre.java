@@ -92,13 +92,13 @@ public abstract class Oeuvre {
     	return exStr;
     }
     
-   /* public String toString() {
+    public String toString() {
     	String str = "";
-    	str += " Titre : " + titre + "\n";
+    	str += "\n Titre : " + titre + "\n";
     	str += " Auteur : " + auteur + "\n";
         return str;
     }
-    */
+    
 
     
     

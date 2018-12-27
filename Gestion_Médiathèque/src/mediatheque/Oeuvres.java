@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class Oeuvres {
 
-	private Vector<Oeuvre> oeuvres;
+	private static Vector<Oeuvre> oeuvres = null;
 	
 	public Oeuvres()
 	{
@@ -33,15 +33,15 @@ public class Oeuvres {
 		oeuvres.remove(oeuvre);
 	}
 	
-	public String toJson() {
+	public static String toJson() {
 		String str = "";
 		for(int i = 0; i < oeuvres.size();i++) {
-			str += oeuvres.get(i);
+			str += oeuvres.get(i).toJsonOeuvre() + "\n";
 		}
 		return str;
 	}
 	
-	public void sauvegarder() {
+	public static void sauvegarder() {
 		String str = new String();
 		  // 
 		  try {
@@ -58,7 +58,7 @@ public class Oeuvres {
 		}
 	}
 	
-	public Vector<Oeuvre> restaurer() throws IOException, ParseException {
+	public static Vector<Oeuvre> restaurer() throws IOException, ParseException {
 		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader("sauvegardeOeuvres.json"));
@@ -77,6 +77,7 @@ public class Oeuvres {
 		    			 oeuvres.add(opera);
 		    		}
 			   }
+			
 			}
 			br.close();
 			return oeuvres;
