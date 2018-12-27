@@ -23,12 +23,12 @@ import mediatheque.Adherents;
 
 public class SupprimerAdherent extends JDialog implements ActionListener {
 	
-	private JButton valider;
-	private JButton annuler;
+	private Adherents adherents;
 	
 	private JComboBox<Adherent> listeAdh;
 	
-	private Adherents adherents;
+	private JButton valider;
+	private JButton annuler;
 	
 	public SupprimerAdherent(Adherents adherents)
 	{

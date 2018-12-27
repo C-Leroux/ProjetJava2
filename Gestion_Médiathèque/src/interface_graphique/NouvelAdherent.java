@@ -18,14 +18,14 @@ import mediatheque.Adherents;
 
 public class NouvelAdherent extends JDialog implements ActionListener {
 	
+	private Adherents adherents;
+	
 	private JTextField textNom;
 	private JTextField textPrenom;
 	private JTextField textAdresse;
 	
 	private JButton valider;
 	private JButton annuler;
-	
-	private Adherents adherents;
 	
 	public NouvelAdherent(Adherents adherents)
 	{

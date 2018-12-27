@@ -27,6 +27,8 @@ import mediatheque.Oeuvres;
 
 public class NouvelleOeuvre extends JDialog implements ActionListener {
 	
+	private Oeuvres oeuvres;
+	
 	private JTextField textNom;
 	private JTextField textAuteur;
 	private JSpinner nbExemplaires;
@@ -36,8 +38,6 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 	
 	private JButton valider;
 	private JButton annuler;
-	
-	private Oeuvres oeuvres;
 	
 	public NouvelleOeuvre(Oeuvres oeuvres)
 	{
