@@ -176,7 +176,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		}
 		if (source == sauver)
 		{
-			// À compléter
+			adherents.sauvegarder();
 		}
 	}
 }
