@@ -9,8 +9,20 @@ public class Varietee extends Oeuvre {
     
     public String toString() {
     	String str = "";
-    	str += "Genre : Variétée\n";
+    	str += " Genre : Varietee\n";
         return str + super.toString();
     }
+    
+    public String toJson() {
+    	String str = "";
+    	str += " Genre : Varietee\n";
+        return str;
+    }
+    
+   /* public String toString() {
+    	String str = "";
+    	str += " Genre : Varietee\n";
+        return str + super.toString();
+    }*/
     
 }
