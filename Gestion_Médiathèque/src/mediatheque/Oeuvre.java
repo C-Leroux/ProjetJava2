@@ -54,6 +54,11 @@ public class Oeuvre {
     {
     	return exemplaires.size();
     }
+    
+    public int getNb()
+    {
+    	return nbExemplaire;
+    }
 
     public String toJson()
     {

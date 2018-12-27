@@ -32,7 +32,6 @@ import mediatheque.Pret;
 public class ConsulterAdherent extends JDialog implements ActionListener {
 	
 	private Adherents adherents;
-	private Adherent adherent;
 	
 	private JComboBox<Adherent> listeAdh;
 	private JCheckBox coordCheck;
@@ -47,7 +46,6 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 	{
 		super();
 		this.adherents = adherents;
-		this.adherent = null;
 		build();
 	}
 	
@@ -185,7 +183,7 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 			repaint();
 		}
 		else
-			dispose();
+			this.dispose();
 		
 	}
 	

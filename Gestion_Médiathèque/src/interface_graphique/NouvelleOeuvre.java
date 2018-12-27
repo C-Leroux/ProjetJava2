@@ -82,6 +82,7 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		ButtonGroup group = new ButtonGroup();
 		group.add(opera);
 		group.add(varietee);
+		opera.doClick();
 		Box box = Box.createHorizontalBox();
 		box.add(opera);
 		box.add(varietee);

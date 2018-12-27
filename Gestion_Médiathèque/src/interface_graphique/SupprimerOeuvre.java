@@ -11,11 +11,16 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import mediatheque.Oeuvres;
+
 public class SupprimerOeuvre extends JDialog {
 	
-	public SupprimerOeuvre()
+	private Oeuvres oeuvres;
+	
+	public SupprimerOeuvre(Oeuvres oeuvres)
 	{
 		super();
+		this.oeuvres = oeuvres;
 		build();
 	}
 	
