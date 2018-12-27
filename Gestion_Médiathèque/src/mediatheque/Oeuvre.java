@@ -15,7 +15,7 @@ public class Oeuvre {
         this.nbExemplaire = nbExemplaire;
 
         for (int i = 1; i <= nbExemplaire; ++i) {
-            exemplaires.add(new Exemplaire(i, this));
+            exemplaires.push(new Exemplaire(i, this));
         }
     }
 
@@ -39,6 +39,20 @@ public class Oeuvre {
         if (exemplaires.search(exemplaire) == -1) {
             exemplaires.push(exemplaire);
         }
+    }
+    
+    public void ajouterExemplaire(int nb)
+    {
+    	for (int i = nbExemplaire + 1 ; i <= nbExemplaire + nb ; ++i)
+    	{
+    		exemplaires.push(new Exemplaire(i, this));
+    	}
+    	nbExemplaire += nb;
+    }
+    
+    public int getDispo()
+    {
+    	return exemplaires.size();
     }
 
     public String toJson()

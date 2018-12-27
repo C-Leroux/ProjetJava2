@@ -2,11 +2,13 @@ package mediatheque;
 
 
 public class Exemplaire {
+	public static int nbExemplaire = 0;
     public int numero;
     public Oeuvre oeuvre;
 
     public Exemplaire(int numero, Oeuvre oeuvre) {
-        this.numero = numero;
+    	++Exemplaire.nbExemplaire;
+        this.numero = Exemplaire.nbExemplaire;
         this.oeuvre = oeuvre;
     }
     

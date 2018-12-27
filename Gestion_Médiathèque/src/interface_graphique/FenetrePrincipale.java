@@ -11,6 +11,7 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 
 import mediatheque.Adherents;
+import mediatheque.Oeuvres;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -26,11 +27,13 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JMenuItem supprimerO;
 	
 	private Adherents adherents;
+	private Oeuvres oeuvres;
 	
-	public FenetrePrincipale(Adherents adherents)
+	public FenetrePrincipale(Adherents adherents, Oeuvres oeuvres)
 	{
 		super();
 		this.adherents = adherents;
+		this.oeuvres = oeuvres;
 		build();
 	}
 	
@@ -106,7 +109,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 			dialog.setVisible(true);
 		}
 		if (source == nouveauO) {
-			NouvelleOeuvre dialog = new NouvelleOeuvre();
+			NouvelleOeuvre dialog = new NouvelleOeuvre(oeuvres);
 			dialog.setVisible(true);
 		}
 		if (source == consulterO) {
