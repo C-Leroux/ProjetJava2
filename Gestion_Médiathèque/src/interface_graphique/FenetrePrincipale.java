@@ -2,11 +2,16 @@ package interface_graphique;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
 
@@ -25,6 +30,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JMenuItem nouveauO;
 	private JMenuItem consulterO;
 	private JMenuItem supprimerO;
+	
+	private JButton preter;
+	private JButton rendre;
+	private JButton sauver;
 	
 	private Adherents adherents;
 	private Oeuvres oeuvres;
@@ -50,10 +59,45 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 	private JPanel buildContentPane()
 	{
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panel.setLayout(new GridBagLayout());
 		panel.setBackground(Color.white);
 		
+		preter = new JButton("Prêter un exemplaire");
+		rendre = new JButton("Rendre un exemplaire");
+		sauver = new JButton("Sauvegarder la médiathèque");
+		
+		preter.addActionListener(this);
+		rendre.addActionListener(this);
+		sauver.addActionListener(this);
+		
+		GridBagConstraints gbc;
+		
+		gbc = buildConstraints(0, 0);
+		panel.add(preter, gbc);
+		
+		gbc = buildConstraints(0, 1);
+		panel.add(rendre, gbc);
+		
+		gbc = buildConstraints(0, 2);
+		gbc.gridwidth = 2;
+		panel.add(sauver, gbc);
+		
 		return panel;
+	}
+	
+	private GridBagConstraints buildConstraints(int x, int y)
+	{
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(5, 0, 5, 5);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.WEST;
+		
+		gbc.gridx = x;
+		gbc.gridy = y;
+		
+		return gbc;
 	}
 	
 	private JMenuBar buildMenuBar()
@@ -119,6 +163,20 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		if (source == supprimerO) {
 			SupprimerOeuvre dialog = new SupprimerOeuvre(oeuvres);
 			dialog.setVisible(true);
+		}
+		if (source == preter)
+		{
+			Preter dialog = new Preter(adherents, oeuvres);
+			dialog.setVisible(true);
+		}
+		if (source == rendre)
+		{
+			//Rendre dialog = new Rendre(adherents, oeuvres);
+			//dialog.setVisible(true);
+		}
+		if (source == sauver)
+		{
+			// À compléter
 		}
 	}
 }

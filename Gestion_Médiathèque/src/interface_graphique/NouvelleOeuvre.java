@@ -75,9 +75,6 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		
 		SpinnerModel model = new SpinnerNumberModel();
 		nbExemplaires = new JSpinner(model);
-		Component editor = nbExemplaires.getEditor();
-		JFormattedTextField field = ((JSpinner.DefaultEditor) editor).getTextField();
-		field.setColumns(4);
 		
 		opera = new JRadioButton("Opéra");
 		varietee = new JRadioButton("Variétée");
@@ -133,13 +130,8 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(5, 0, 5, 5);
-		if (y != 3)
-		{
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.anchor = GridBagConstraints.WEST;
-		}
-		else
-			gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.WEST;
 		
 		gbc.gridx = x;
 		gbc.gridy = y;

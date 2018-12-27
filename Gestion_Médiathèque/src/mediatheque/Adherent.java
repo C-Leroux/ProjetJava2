@@ -1,6 +1,7 @@
 package mediatheque;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -42,9 +43,11 @@ public class Adherent {
 	  return adresse;
   }
 
-  public Exemplaire emprunter(Oeuvre oeuvre) {
+  public Exemplaire emprunter(Oeuvre oeuvre, Date dateFin) {
+	Calendar today = Calendar.getInstance();
+	Date dateDebut = today.getTime();
     Exemplaire exemplaire = oeuvre.emprunter();
-    Pret pret = new Pret(exemplaire.numero, null, null);
+    Pret pret = new Pret(exemplaire.numero, dateDebut, dateFin);
     if (exemplaire != null) {
       dicoExemplairePret.put(exemplaire, pret);
       return exemplaire;
