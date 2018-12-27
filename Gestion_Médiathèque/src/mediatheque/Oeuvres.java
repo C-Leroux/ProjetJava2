@@ -15,4 +15,9 @@ public class Oeuvres {
 	{
 		return oeuvres;
 	}
+	
+	public void addOeuvre(Oeuvre oeuvre)
+	{
+		oeuvres.add(oeuvre);
+	}
 }
