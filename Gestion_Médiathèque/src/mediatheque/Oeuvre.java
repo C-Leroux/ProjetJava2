@@ -62,48 +62,45 @@ public abstract class Oeuvre {
     	return nbExemplaire;
     }
 
-    public String toJson()
+    public String toJsonOeuvre()
     {
     	String oeuvreStr = new String();
-    	oeuvreStr = "{ \"Oeuvre\": {\n" + 
-   			 " \"titre\": \"" + this.titre + "\"" + 
-   			 " \"auteur\": \"" + this.auteur + "\"" +
-   			 " \"nbExemplaire\": " + this.nbExemplaire;
-    	oeuvreStr = oeuvreStr + toJsonExemplaire() + "                 }\n";
+    	oeuvreStr = "\"Oeuvre\": {" + 
+   			 " \"titre\":\"" + this.titre + "\"" + 
+   			 " \"auteur\":\"" + this.auteur + "\"" +
+   			 " \"nbExemplaireO\":\"" + this.nbExemplaire + "\"";
+    	//oeuvreStr = oeuvreStr + toJsonExemplaire() + " } ";
+    	String s = this instanceof Opera? "Opera" : this instanceof Varietee ? "Varietee" : "";
+    	oeuvreStr += "\"type\":";
+    	oeuvreStr += this instanceof Opera? "\"Opera\"" : this instanceof Varietee ? "\"Varietee\"" : "";
+    	oeuvreStr +=   " } ";
     	return oeuvreStr;
     }
     
     private String toJsonExemplaire() {
     	String exStr = new String();
-    	exStr = "{ \"exemplaires\": {\n";
+    	exStr = "{ \"exemplaires\": {";
     	
     	Iterator<Exemplaire> itr = exemplaires.iterator();
     	while(itr.hasNext()) {
-    		exStr += "{\n";
+    		exStr += "{";
     		Exemplaire exemplaire = (Exemplaire)itr.next();
     		exStr += exemplaire.toJson();
-    		exStr += "}\n";
+    		exStr += "}";
     	}
-    	exStr += "}\n";
+    	exStr += "}";
     	return exStr;
     }
     
-    public String toString() {
+   /* public String toString() {
     	String str = "";
     	str += " Titre : " + titre + "\n";
     	str += " Auteur : " + auteur + "\n";
         return str;
     }
+    */
+
     
     
-    public String toJS()
-    {
-    	String oeuvreStr = new String();
-    	oeuvreStr = " \"Oeuvre\": {\n" + 
-   			 "                      \"titre\": \"" + this.titre + "\"\n" + 
-   			 "                      \"auteur\": \"" + this.auteur + "\"\n" +
-   			 "                      \"nbExemplaire\": " + this.nbExemplaire + "\n                         }\n";
-    	return oeuvreStr;
-    }
     
 }
