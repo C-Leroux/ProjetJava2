@@ -1,21 +1,38 @@
 package interface_graphique;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
-public class SupprimerOeuvre extends JDialog {
+import mediatheque.Adherent;
+import mediatheque.Oeuvre;
+import mediatheque.Oeuvres;
+
+public class SupprimerOeuvre extends JDialog implements ActionListener {
 	
-	public SupprimerOeuvre()
+	private Oeuvres oeuvres;
+	
+	private JComboBox<Oeuvre> listeOeu;
+	
+	private JButton valider;
+	private JButton annuler;
+	
+	public SupprimerOeuvre(Oeuvres oeuvres)
 	{
 		super();
+		this.oeuvres = oeuvres;
 		build();
 	}
 	
@@ -38,10 +55,24 @@ public class SupprimerOeuvre extends JDialog {
 		
 		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
 		
-		JComboBox listeOeu = new JComboBox();
+		listeOeu = new JComboBox<Oeuvre>(oeuvres.getOeuvres());
+		listeOeu.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Oeuvre){
+                    Oeuvre oeuvre = (Oeuvre) value;
+                    setText(oeuvre.getTitre());
+                }
+                return this;
+            }
+        } );
 		
-		JButton valider = new JButton("Valider");
-		JButton annuler = new JButton("Annuler");
+		valider = new JButton("Valider");
+		annuler = new JButton("Annuler");
+		
+		valider.addActionListener(this);
+		annuler.addActionListener(this);
 		
 		GridBagConstraints gbc;
 		
@@ -73,6 +104,20 @@ public class SupprimerOeuvre extends JDialog {
 		gbc.gridy = y;
 		
 		return gbc;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Object source = e.getSource();
+		
+		if (source == valider)
+		{
+			Oeuvre oeuvre = (Oeuvre) listeOeu.getSelectedItem();
+			oeuvres.removeOeuvre(oeuvre);
+			revalidate();
+			repaint();
+		}
+		this.dispose();
 	}
 
 }

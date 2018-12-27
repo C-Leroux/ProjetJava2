@@ -6,6 +6,10 @@ public class Varietee extends Oeuvre {
         super(titre, auteur, nbExemplaire);
     }
 
+    public String getGenre()
+    {
+    	return "Variétée";
+    }
     
     public String toString() {
     	String str = "";

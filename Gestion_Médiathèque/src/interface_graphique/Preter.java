@@ -2,57 +2,62 @@ package interface_graphique;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Hashtable;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 import mediatheque.Adherent;
 import mediatheque.Adherents;
-import mediatheque.Exemplaire;
-import mediatheque.Pret;
+import mediatheque.Oeuvre;
+import mediatheque.Oeuvres;
+import mediatheque.Opera;
+import mediatheque.Varietee;
 
-public class ConsulterAdherent extends JDialog implements ActionListener {
+public class Preter extends JDialog implements ActionListener {
 	
 	private Adherents adherents;
+	private Oeuvres oeuvres;
 	
 	private JComboBox<Adherent> listeAdh;
-	private JCheckBox coordCheck;
-	private JCheckBox pretsCheck;
+	private JComboBox<Oeuvre> listeOeu;
+	private JTextField textDate;
 	
 	private JButton valider;
 	private JButton annuler;
 	
-	private JPanel panel2;
-	
-	public ConsulterAdherent(Adherents adherents)
+	public Preter(Adherents adherents, Oeuvres oeuvres)
 	{
 		super();
 		this.adherents = adherents;
+		this.oeuvres = oeuvres;
 		build();
 	}
 	
 	private void build()
 	{
-		setTitle("Consulter les adhérents");
-		setSize(600, 200);
+		setTitle("Prêter un exemplaire");
+		setSize(300, 200);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -65,12 +70,11 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
 		panel.setBackground(Color.white);
-		panel.setAlignmentY(TOP_ALIGNMENT);
 		
-		JLabel liste = new JLabel("Liste des adhérents", JLabel.LEFT);
+		JLabel adh = new JLabel("Adherent", JLabel.LEFT);
+		JLabel oeu = new JLabel("Oeuvre empruntée", JLabel.LEFT);
+		JLabel date = new JLabel("Date butoire", JLabel.LEFT);
 		
-		// On cree la Combo Box contenant la liste des adherents, puis on lui donne un renderer qui va permettre
-		// d'afficher le nom complet des adherents de la liste
 		listeAdh = new JComboBox<Adherent>(adherents.getAdherents());
 		listeAdh.setRenderer(new DefaultListCellRenderer() {
             @Override
@@ -84,8 +88,20 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
             }
         } );
 		
-		coordCheck = new JCheckBox("Afficher les coordonnées de l'adhérent");
-		pretsCheck = new JCheckBox("Afficher les prêts en cours");
+		listeOeu = new JComboBox<Oeuvre>(oeuvres.getOeuvres());
+		listeOeu.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if(value instanceof Oeuvre){
+                    Oeuvre oeuvre = (Oeuvre) value;
+                    setText(oeuvre.getTitre());
+                }
+                return this;
+            }
+        } );
+		
+		textDate = new JTextField("jj/mm/aaaa");
 		
 		valider = new JButton("Valider");
 		annuler = new JButton("Annuler");
@@ -96,18 +112,22 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		GridBagConstraints gbc;
 		
 		gbc = buildConstraints(0, 0);
-		panel.add(liste, gbc);
+		panel.add(adh, gbc);
 		
 		gbc = buildConstraints(0, 1);
-		gbc.gridwidth = 2;
-		panel.add(coordCheck, gbc);
+		panel.add(oeu, gbc);
 		
 		gbc = buildConstraints(0, 2);
-		gbc.gridwidth = 2;
-		panel.add(pretsCheck, gbc);
+		panel.add(date, gbc);
 		
 		gbc = buildConstraints(1, 0);
 		panel.add(listeAdh, gbc);
+		
+		gbc = buildConstraints(1, 1);
+		panel.add(listeOeu, gbc);
+		
+		gbc = buildConstraints(1, 2);
+		panel.add(textDate, gbc);
 		
 		gbc = buildConstraints(0, 3);
 		panel.add(valider, gbc);
@@ -115,17 +135,7 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		gbc = buildConstraints(1, 3);
 		panel.add(annuler, gbc);
 		
-		panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
-		panel2.setPreferredSize(new Dimension(300,200));
-		panel2.setAlignmentY(TOP_ALIGNMENT);
-		
-		JPanel global = new JPanel();
-		global.setLayout(new BoxLayout(global, BoxLayout.LINE_AXIS));
-		global.add(panel);
-		global.add(panel2);
-		
-		return global;
+		return panel;
 	}
 	
 	private GridBagConstraints buildConstraints(int x, int y)
@@ -133,7 +143,6 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(5, 0, 5, 5);
-
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.anchor = GridBagConstraints.WEST;
 		
@@ -149,42 +158,20 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		
 		if (source == valider)
 		{
-			panel2.removeAll();
-			
 			Adherent adherent = (Adherent) listeAdh.getSelectedItem();
-			if (adherent == null)
-				return;
+			Oeuvre oeuvre = (Oeuvre) listeOeu.getSelectedItem();
 			
-			Box box = Box.createVerticalBox();
-			box.setAlignmentY(TOP_ALIGNMENT);
-			box.add(new JLabel("Nom de l'adhérent : " + adherent.getNomPrenom()));
-			
-			if (coordCheck.isSelected())
-			{
-				box.add(new JLabel("Adresse : " + adherent.getAdresse()));
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				Date date = format.parse(textDate.getText());
+				adherent.emprunter(oeuvre, date);
+				this.dispose();
+			} catch (ParseException e1) {
+				// Label error
 			}
-			
-			if (pretsCheck.isSelected())
-			{
-				Hashtable<Exemplaire,Pret> prets = adherent.getdicExemplaiPret();
-				
-				Set<Exemplaire> keys = prets.keySet();
-				for (Exemplaire key : keys)
-				{
-					Box box2 = Box.createVerticalBox();
-					box2.add(new JLabel(key.getOeuvre().toString()));
-					box2.add(new JLabel(key.toString()));
-					box2.add(new JLabel(prets.get(key).toString()));
-					box.add(box2);
-				}
-			}
-			panel2.add(box);
-			validate();
-			repaint();
 		}
 		else
 			this.dispose();
-		
 	}
-	
+
 }

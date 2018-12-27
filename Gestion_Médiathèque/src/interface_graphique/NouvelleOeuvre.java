@@ -24,8 +24,12 @@ import javax.swing.SpinnerNumberModel;
 import mediatheque.Adherent;
 import mediatheque.Oeuvre;
 import mediatheque.Oeuvres;
+import mediatheque.Opera;
+import mediatheque.Varietee;
 
 public class NouvelleOeuvre extends JDialog implements ActionListener {
+	
+	private Oeuvres oeuvres;
 	
 	private JTextField textNom;
 	private JTextField textAuteur;
@@ -36,8 +40,6 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 	
 	private JButton valider;
 	private JButton annuler;
-	
-	private Oeuvres oeuvres;
 	
 	public NouvelleOeuvre(Oeuvres oeuvres)
 	{
@@ -73,15 +75,13 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		
 		SpinnerModel model = new SpinnerNumberModel();
 		nbExemplaires = new JSpinner(model);
-		Component editor = nbExemplaires.getEditor();
-		JFormattedTextField field = ((JSpinner.DefaultEditor) editor).getTextField();
-		field.setColumns(4);
 		
 		opera = new JRadioButton("Opéra");
 		varietee = new JRadioButton("Variétée");
 		ButtonGroup group = new ButtonGroup();
 		group.add(opera);
 		group.add(varietee);
+		opera.doClick();
 		Box box = Box.createHorizontalBox();
 		box.add(opera);
 		box.add(varietee);
@@ -130,13 +130,8 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 		GridBagConstraints gbc = new GridBagConstraints();
 		
 		gbc.insets = new Insets(5, 0, 5, 5);
-		if (y != 3)
-		{
-			gbc.fill = GridBagConstraints.HORIZONTAL;
-			gbc.anchor = GridBagConstraints.WEST;
-		}
-		else
-			gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.anchor = GridBagConstraints.WEST;
 		
 		gbc.gridx = x;
 		gbc.gridy = y;
@@ -154,7 +149,9 @@ public class NouvelleOeuvre extends JDialog implements ActionListener {
 			String auteur = textAuteur.getText();
 			int nb = (Integer) nbExemplaires.getValue();
 			if (opera.isSelected())
-				oeuvres.addOeuvre(new Oeuvre(nom, auteur, nb));
+				oeuvres.addOeuvre(new Opera(nom, auteur, nb));
+			else
+				oeuvres.addOeuvre(new Varietee(nom, auteur, nb));
 		}
 		this.dispose();
 	}

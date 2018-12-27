@@ -45,8 +45,12 @@ public class Adherent {
 	  return adresse;
   }
 
+
   public Exemplaire emprunter(Oeuvre oeuvre) throws ParseException {
+	//Calendar today = Calendar.getInstance();
+	//Date dateDebut = today.getTime();
     Exemplaire exemplaire = oeuvre.emprunter();
+
     Calendar dateDebut = Calendar.getInstance();
 	Calendar dateFin = Calendar.getInstance(); 
 	dateFin.add(Calendar.MONTH, 1);

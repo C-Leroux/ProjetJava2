@@ -20,4 +20,9 @@ public class Oeuvres {
 	{
 		oeuvres.add(oeuvre);
 	}
+	
+	public void removeOeuvre(Oeuvre oeuvre)
+	{
+		oeuvres.remove(oeuvre);
+	}
 }
