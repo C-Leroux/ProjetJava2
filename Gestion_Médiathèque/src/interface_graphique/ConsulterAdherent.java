@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Hashtable;
 import java.util.Set;
 
@@ -22,11 +23,13 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import mediatheque.Adherent;
 import mediatheque.Adherents;
 import mediatheque.Exemplaire;
+import mediatheque.Oeuvre;
 import mediatheque.Pret;
 
 public class ConsulterAdherent extends JDialog implements ActionListener {
@@ -116,7 +119,7 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 		panel.add(annuler, gbc);
 		
 		panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.PAGE_AXIS));
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.LINE_AXIS));
 		panel2.setPreferredSize(new Dimension(300,200));
 		panel2.setAlignmentY(TOP_ALIGNMENT);
 		
@@ -157,6 +160,9 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 			
 			Box box = Box.createVerticalBox();
 			box.setAlignmentY(TOP_ALIGNMENT);
+			
+			JScrollPane scroll = new JScrollPane(box);
+			
 			box.add(new JLabel("Nom de l'adhérent : " + adherent.getNomPrenom()));
 			
 			if (coordCheck.isSelected())
@@ -171,14 +177,22 @@ public class ConsulterAdherent extends JDialog implements ActionListener {
 				Set<Exemplaire> keys = prets.keySet();
 				for (Exemplaire key : keys)
 				{
+					Oeuvre oeuvre = key.getOeuvre();
+					Pret pret = prets.get(key);
+			    	SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+			    	
 					Box box2 = Box.createVerticalBox();
-					box2.add(new JLabel(key.getOeuvre().toString()));
+					box2.add(new JLabel("Titre : " + oeuvre.getTitre()));
+					box2.add(new JLabel("Auteur : " + oeuvre.getAuteur()));
+					box2.add(new JLabel("Genre : " + oeuvre.getGenre()));
 					box2.add(new JLabel(key.toString()));
-					box2.add(new JLabel(prets.get(key).toString()));
+					box2.add(new JLabel("Date de prêt : " + pret.getFormatDebut(format)));
+					box2.add(new JLabel("Date butoire : " + pret.getFormatFin(format)));
+					box.add(Box.createRigidArea(new Dimension(0,20)));
 					box.add(box2);
 				}
 			}
-			panel2.add(box);
+			panel2.add(scroll);
 			validate();
 			repaint();
 		}

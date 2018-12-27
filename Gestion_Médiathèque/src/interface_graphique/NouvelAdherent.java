@@ -12,6 +12,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import mediatheque.Adherent;
 import mediatheque.Adherents;
@@ -59,6 +61,32 @@ public class NouvelAdherent extends JDialog implements ActionListener {
 		textNom = new JTextField(text_size);
 		textPrenom = new JTextField(text_size);
 		textAdresse = new JTextField(text_size);
+		
+		DocumentListener dl = new DocumentListener() {
+			public void changedUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void removeUpdate(DocumentEvent e) {
+				changed();
+			}
+			public void insertUpdate(DocumentEvent e) {
+				changed();
+			}
+
+			public void changed() {
+				if (textNom.getText().equals("") || textPrenom.getText().equals("") || textAdresse.getText().equals("")){
+					valider.setEnabled(false);
+				}
+				else {
+					valider.setEnabled(true);
+				}
+		
+			}
+		};
+		
+		textNom.getDocument().addDocumentListener(dl);
+		textPrenom.getDocument().addDocumentListener(dl);
+		textAdresse.getDocument().addDocumentListener(dl);
 		
 		valider = new JButton("Valider");
 		annuler = new JButton("Annuler");

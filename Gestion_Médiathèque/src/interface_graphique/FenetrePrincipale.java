@@ -171,8 +171,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
 		}
 		if (source == rendre)
 		{
-			//Rendre dialog = new Rendre(adherents, oeuvres);
-			//dialog.setVisible(true);
+			Rendre dialog = new Rendre(adherents, oeuvres);
+			dialog.setVisible(true);
 		}
 		if (source == sauver)
 		{
