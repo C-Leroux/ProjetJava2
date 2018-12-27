@@ -27,7 +27,7 @@ public class Main {
             Varietee varietee1 = new Varietee(titre, auteur, nombreExemplaire);
 
             System.out.println("Adherent 1 avant emprunt =" + adherent1);
-            Exemplaire exemplaire = adherent1.emprunter(varietee1);
+            Exemplaire exemplaire = adherent1.emprunter(varietee1, null);
             System.out.println("Adherent 1 apres emprunt=" + adherent1);
 
             adherent1.ramener(exemplaire);
@@ -57,10 +57,10 @@ public class Main {
     	Oeuvres oeuvres = new Oeuvres();
     	Varietee varietee1 = new Varietee(titre, auteur, nombreExemplaire);
     	oeuvres.addOeuvre(varietee1);
-    	Exemplaire exemplaire = adherent1.emprunter(varietee1);
+    	Exemplaire exemplaire = adherent1.emprunter(varietee1,null);
     	
     	Opera opera1 = new Opera(titre, auteur, nombreExemplaire);
-    	Exemplaire exemplaire2 = adherent1.emprunter(opera1);
+    	Exemplaire exemplaire2 = adherent1.emprunter(opera1, null);
     	adherents.sauvegarder(); 
     	adherents.restaurer();
     	oeuvres.addOeuvre(opera1);
